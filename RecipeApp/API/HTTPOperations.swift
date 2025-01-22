@@ -8,11 +8,11 @@
 import Foundation
 
 protocol HTTPOperations {
-    func fetchData<T: Codable>(as type: T.Type, endpoint: String, method: HTTPMethods, body: Data?, headers: [String: String]?) async throws -> T
+    func fetchData<T: Decodable>(as type: T.Type, endpoint: String, method: HTTPMethods, body: Data?, headers: [String: String]?) async throws -> T
 }
 
 extension HTTPOperations {
-    func fetchData<T: Codable>(as type: T.Type, endpoint: String, method: HTTPMethods = .GET, body: Data? = nil, headers: [String: String]? = nil) async throws -> T {
+    func fetchData<T: Decodable>(as type: T.Type, endpoint: String, method: HTTPMethods = .GET, body: Data? = nil, headers: [String: String]? = nil) async throws -> T {
         guard let url = URL(string: endpoint) else {
             throw RecipeError.invalidURL
         }

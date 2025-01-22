@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct RecipeAppApp: App {
+    @StateObject private var coordinator = RecipesCoordinator()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            coordinator.start()
         }
     }
 }

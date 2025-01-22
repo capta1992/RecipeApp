@@ -7,24 +7,23 @@
 
 import Foundation
 
-struct RecipeListResponse: Codable {
+struct RecipeListResponse: Decodable {
     let recipes: [Recipe]
 }
 
-struct Recipe: Codable, Identifiable {
+struct Recipe: Decodable, Identifiable {
     let id: UUID
     let name: String
     let cuisine: String
+    
     let photoURLSmall: URL?
     let photoURLLarge: URL?
-    
-    // If other fields are used, we can add them
     let sourceURL: URL?
     let youtubeURL: URL?
     
     enum CodingKeys: String, CodingKey {
         case name, cuisine, uuid
-        case photoURLSmall = "photo_url_small"
+        case photURLSmall = "photo_url_small"
         case photoURLLarge = "photo_url_large"
         case sourceURL = "source_url"
         case youtubeURL = "youtube_url"
@@ -45,8 +44,7 @@ struct Recipe: Codable, Identifiable {
         }
         id = uuidValue
         
-        // Optional fields
-        let smallString = try container.decodeIfPresent(String.self, forKey: .photoURLSmall)
+        let smallString = try container.decodeIfPresent(String.self, forKey: .photURLSmall)
         photoURLSmall = smallString.flatMap({ URL(string: $0) })
         
         let largeString = try container.decodeIfPresent(String.self, forKey: .photoURLLarge)

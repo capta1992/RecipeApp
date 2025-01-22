@@ -13,6 +13,7 @@ protocol RecipeServiceProtocol {
 }
 
 final class RecipeService: HTTPOperations, RecipeServiceProtocol {
+    
     private let endpoint: String
     
     init(endpoint: String) {
@@ -20,7 +21,8 @@ final class RecipeService: HTTPOperations, RecipeServiceProtocol {
     }
     
     func fetchRecipes() async throws -> [Recipe] {
-        return try await fetchData(as: [Recipe].self, endpoint: endpoint)
+        let response = try await fetchData(as: RecipeListResponse.self, endpoint: endpoint)
+        return response.recipes
     }
     
     func downloadImage(at url: URL) async throws -> Data {
